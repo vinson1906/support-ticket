@@ -5,7 +5,7 @@ import TicketFilters from './components/ticketFilter'
 import TicketsTable from './components/TickerTable'
 import CreateTicketModal from './components/createTable'
 
-import { useGetTicketData, useCreateTicketData } from './components/service/tickets.service'
+import { useGetTicketData, useCreateTicketData, useGetFilters } from './components/service/tickets.service'
 
 
 
@@ -15,10 +15,16 @@ function App() {
   const [filters, setFilters] = useState({
     filter1: '',
     filter2: '',
-    search: '',
   })
 
-  const { data: tiketData,isLoading,error } = useGetTicketData()
+
+
+  console.log("filters:", filters)
+
+  const { data: tiketData, isLoading, error } = useGetTicketData()
+  const { mutate: ticketMutate } = useCreateTicketData()
+
+  const { data: filterData } = useGetFilters(filters)
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -41,10 +47,23 @@ function App() {
   //   }
   // }
 
-
+  //form data submission to backend
 
   const handleCreateTicket = async (formData) => {
     console.log(formData);
+    try {
+      ticketMutate(formData, {
+        onSuccess: () => {
+          alert("ticket created successfully!")
+        },
+        onError: () => {
+          alert("something went worng while creating the ticket")
+        }
+      })
+    }
+    catch (err) {
+      console.error("Error:", err)
+    }
 
   }
 
@@ -63,8 +82,10 @@ function App() {
           onFilterChange={handleFilterChange}
           onCreateTicket={() => setIsModalOpen(true)}
         />
+        <TicketsTable tickets={tiketData} />
 
-        <TicketsTable tickets={tickets} />
+
+
       </div>
 
       <CreateTicketModal

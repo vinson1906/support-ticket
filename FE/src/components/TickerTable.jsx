@@ -33,7 +33,7 @@ const TicketsTable = ({ tickets }) => {
               <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Priority</th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Status</th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Created Date</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Closed</th>
+              {/* <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Closed</th> */}
             </tr>
           </thead>
           <tbody>
@@ -54,8 +54,8 @@ const TicketsTable = ({ tickets }) => {
                     {ticket.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-600">{formatDate(ticket.created_date)}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 text-sm text-gray-600">{formatDate(ticket.created_at)}</td>
+                {/* <td className="px-6 py-4">
                   <div className="flex items-center space-x-2">
                     <button className="p-1 text-gray-400 hover:text-gray-600">
                       <MoreVertical size={16} />
@@ -64,7 +64,7 @@ const TicketsTable = ({ tickets }) => {
                       <ChevronDown size={16} />
                     </button>
                   </div>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
